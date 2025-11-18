@@ -1,0 +1,112 @@
+# GotCraftHub Configuration
+
+# The name of the hub world
+hub-world: "hub"
+
+# Teleport to spawn on join
+teleport-to-spawn-on-join: true
+
+# BungeeCord integration
+bungeecord:
+  enabled: false  # Set to true if running on a BungeeCord network
+  # When enabled, the schematic display will show total players across all servers
+
+# Command filtering (blocks /pl, /plugins, /op, etc. in hub)
+command-filtering:
+  enabled: true
+  # Players with ghub.admin permission bypass the filter
+
+# Hub items (set to false to not touch player inventory)
+hub-items:
+  enabled: true
+  clear-inventory: true  # Clear inventory before giving hub items
+
+# Double jump settings
+double-jump:
+  enabled: true
+  power: 1.2
+  cooldown: 1.0  # seconds
+
+# Pressure plate boost settings
+pressure-plate-boost:
+  enabled: true
+  horizontal: 1.5
+  vertical: 0.6
+  cooldown: 0.5  # seconds
+
+# Protection settings
+protection:
+  block-break: true
+  block-place: true
+  interaction: true
+  damage: true
+  hunger: false  # false = no hunger loss
+  health-lock: true
+  pvp: true
+  item-drop: true
+  item-pickup: true
+  mob-spawns: true
+
+# Trail settings
+trails:
+  enabled: true
+  particle: "END_ROD"
+  amount: 2
+  spawn-rate: 5  # ticks between spawns
+
+# Messages (MiniMessage format with GOTCRAFT branding)
+messages:
+  prefix: "<gradient:aqua:green>GOTCRAFT</gradient> <dark_gray>»</dark_gray> "
+  build-mode-enabled: "<gradient:aqua:green>GOTCRAFT</gradient> <dark_gray>»</dark_gray> <green>You can now build in the hub!</green>"
+  build-mode-disabled: "<gradient:aqua:green>GOTCRAFT</gradient> <dark_gray>»</dark_gray> <red>Build mode disabled.</red>"
+  players-shown: "<gradient:aqua:green>GOTCRAFT</gradient> <dark_gray>»</dark_gray> <green>Players are now <yellow>VISIBLE</yellow>.</green>"
+  players-hidden: "<gradient:aqua:green>GOTCRAFT</gradient> <dark_gray>»</dark_gray> <green>Players are now <red>HIDDEN</red>.</green>"
+  spawn-set: "<gradient:aqua:green>GOTCRAFT</gradient> <dark_gray>»</dark_gray> <green>Hub spawn location set to your current position!</green>"
+  reload: "<gradient:aqua:green>GOTCRAFT</gradient> <dark_gray>»</dark_gray> <green>Configuration reloaded!</green>"
+  no-permission: "<gradient:aqua:green>GOTCRAFT</gradient> <dark_gray>»</dark_gray> <red>You don't have permission to do that!</red>"
+  not-in-hub: "<gradient:aqua:green>GOTCRAFT</gradient> <dark_gray>»</dark_gray> <red>You can only use this in the hub world!</red>"
+
+# Join/Leave Messages (MiniMessage format with GOTCRAFT branding)
+join-leave-messages:
+  enabled: true
+  join: "<gradient:aqua:green>GOTCRAFT</gradient> <dark_gray>»</dark_gray> <green><gradient:aqua:green>%player_name%</gradient> joined the hub</green>"
+  leave: "<gradient:aqua:green>GOTCRAFT</gradient> <dark_gray>»</dark_gray> <red><gradient:aqua:green>%player_name%</gradient> left the hub</red>"
+  # Legacy format also supported: "&8[&a+&8] &7%player_name% &ajoined the hub"
+
+# Chat Format (Supports MiniMessage, legacy & codes, and PlaceholderAPI)
+chat-format:
+  enabled: true
+  format: "<gradient:aqua:green>%player_name%</gradient> <dark_gray>»</dark_gray> <white>%message%</white>"
+  # MiniMessage examples:
+  # - Gradient: "<gradient:red:blue>%player_name%</gradient> <dark_gray>»</dark_gray> <white>%message%</white>"
+  # - Rainbow: "<rainbow>%player_name%</rainbow> <dark_gray>»</dark_gray> <white>%message%</white>"
+  # - Hover text: "<hover:show_text:'Click me!'>%player_name%</hover> <dark_gray>»</dark_gray> <white>%message%</white>"
+  # - With PlaceholderAPI: "<gray>[%vault_rank%]</gray> %player_name% <dark_gray>»</dark_gray> <white>%message%</white>"
+  # Legacy format also supported: "&7%player_name% &8» &f%message%"
+
+# Schematic Display Settings (requires WorldEdit)
+# Display "Players: XX/XX" using block-based schematics
+schematic-display:
+  enabled: false  # Set to true to enable
+  max-players: 100  # Maximum player count to display
+  update-interval: 100  # Update every X ticks (100 = 5 seconds)
+  character-spacing: 5  # Blocks between each character
+  clear-width: 100  # Width of area to clear before pasting
+  clear-height: 20  # Height of area to clear
+  clear-depth: 10  # Depth of area to clear
+  # Location will be set using /ghub setdisplay
+  # location:
+  #   world: "hub"
+  #   x: 0
+  #   y: 100
+  #   z: 0
+
+# Instructions for schematic display:
+# 1. Place your schematic files in plugins/GotCraftHub/schematics/
+# 2. Name them: 0.schem, 1.schem, ..., 9.schem for numbers
+# 3. Optional letter schematics: p.schem, l.schem, a.schem, y.schem, e.schem, r.schem, s.schem
+# 4. Optional: colon.schem (for :), slash.schem (for /)
+# 5. Or use a single "players.schem" for the entire "Players:" text
+# 6. Run /ghub setdisplay to set the location
+# 7. Set enabled: true in this config
+# 8. Reload with /ghub reload

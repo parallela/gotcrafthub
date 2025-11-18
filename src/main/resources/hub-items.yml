@@ -1,0 +1,94 @@
+# Hub Items Configuration
+# Each item will be given to players when they join the hub
+
+items:
+  profile:
+    slot: 4  # Center of hotbar
+    material: PLAYER_HEAD
+    name: "<gradient:aqua:green>%player_name%</gradient>"
+    lore:
+      - "<gray>Click to view your profile</gray>"
+    player-skin: true  # Use player's own skin
+    command: "console:say %player_name% clicked their profile"
+    # Example with custom command: command: "servers"
+
+  player-visibility:
+    slot: 8
+    material: CLOCK
+    name: "<gradient:aqua:green>Player Visibility</gradient>"
+    lore:
+      - "<gray>Right-click to toggle</gray>"
+      - "<gray>player visibility!</gray>"
+    command: "ghub hide"
+
+# You can add more items here following the same format
+# Available placeholders in commands:
+#   %player_name% - Player's name
+#   %player_uuid% - Player's UUID
+#
+# Command types:
+#   "command" - Run as player (e.g., "servers" or "server")
+#   "console:command" - Run as console (e.g., "console:give %player_name% diamond 1")
+#
+# Examples:
+#   command: "servers"           # Opens server selector if you have that command
+#   command: "shop"              # Opens shop if you have that command
+#   command: "/warp spawn"       # Works with or without leading slash
+#   command: "console:give %player_name% diamond 1"  # Console command
+#
+# For player heads:
+#   player-skin: true - Uses the player's own skin
+#   texture: "base64" - Uses a custom base64 texture
+#
+# IMPORTANT: Make sure the commands you use actually exist on your server!
+# If you get "unknown command", the command doesn't exist or isn't registered.
+
+# GotCraftHub Configuration
+
+# The name of the hub world
+hub-world: "hub"
+
+# Double jump settings
+double-jump:
+  enabled: true
+  power: 1.2
+  cooldown: 1.0  # seconds
+
+# Pressure plate boost settings
+pressure-plate-boost:
+  enabled: true
+  horizontal: 1.5
+  vertical: 0.6
+  cooldown: 0.5  # seconds
+
+# Protection settings
+protection:
+  block-break: true
+  block-place: true
+  interaction: true
+  damage: true
+  hunger: false  # false = no hunger loss
+  health-lock: true
+  pvp: true
+  item-drop: true
+  item-pickup: true
+  mob-spawns: true
+
+# Trail settings
+trails:
+  enabled: true
+  particle: "END_ROD"
+  amount: 2
+  spawn-rate: 5  # ticks between spawns
+
+# Messages
+messages:
+  prefix: "&8[&6GotCraftHub&8] &7"
+  build-mode-enabled: "&aYou can now build in the hub!"
+  build-mode-disabled: "&cBuild mode disabled."
+  players-shown: "&aPlayers are now &eVISIBLE&a."
+  players-hidden: "&aPlayers are now &cHIDDEN&a."
+  reload: "&aConfiguration reloaded!"
+  no-permission: "&cYou don't have permission to do that!"
+  not-in-hub: "&cYou can only use this in the hub world!"
+

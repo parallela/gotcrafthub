@@ -1,0 +1,30 @@
+name: GotCraftHub
+version: '1.0-SNAPSHOT'
+main: me.lubomirstankov.gotCraftHub.GotCraftHub
+api-version: '1.21'
+depend: [ProtocolLib]
+softdepend: [PlaceholderAPI, WorldEdit]
+
+commands:
+  ghub:
+    description: Main GotCraftHub command
+    usage: /ghub <build|hide|reload>
+    aliases: [hub, gothub]
+  # Override Bukkit commands
+  plugins:
+    description: Blocked command
+    usage: /plugins
+    aliases: [pl]
+  help:
+    description: Blocked command
+    usage: /help
+    aliases: ['?']
+  version:
+    description: Blocked command
+    usage: /version
+    aliases: [ver, about]
+
+permissions:
+  ghub.admin:
+    description: Access to admin commands
+    default: op
