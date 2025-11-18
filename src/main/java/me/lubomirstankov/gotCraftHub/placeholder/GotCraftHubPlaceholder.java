@@ -15,7 +15,7 @@ public class GotCraftHubPlaceholder extends PlaceholderExpansion {
 
     @Override
     public @NotNull String getIdentifier() {
-        return "gothub";
+        return "gotcraft";
     }
 
     @Override
@@ -39,6 +39,19 @@ public class GotCraftHubPlaceholder extends PlaceholderExpansion {
             return "";
         }
 
+        // Handle server-specific player counts: %gotcraft_servername%
+        // This will match any server name directly as the parameter
+        // Examples: %gotcraft_lobby%, %gotcraft_survival%, %gotcraft_creative%
+        if (plugin.getBungeeCordManager() != null) {
+            // Check if this might be a server name (not one of our known placeholders)
+            if (!isKnownPlaceholder(params.toLowerCase())) {
+                // Treat it as a server name
+                int count = plugin.getBungeeCordManager().getServerPlayerCount(params);
+                return String.valueOf(count);
+            }
+        }
+
+        // Handle known placeholders
         switch (params.toLowerCase()) {
             case "is_hidden":
                 return String.valueOf(plugin.getPlayerDataManager().arePlayersHidden(player));
@@ -62,6 +75,14 @@ public class GotCraftHubPlaceholder extends PlaceholderExpansion {
             case "online_players":
                 return String.valueOf(plugin.getServer().getOnlinePlayers().size());
 
+            case "total_players":
+            case "bungee_total":
+                // Total players across all BungeeCord servers
+                if (plugin.getBungeeCordManager() != null) {
+                    return String.valueOf(plugin.getBungeeCordManager().getTotalPlayers());
+                }
+                return String.valueOf(plugin.getServer().getOnlinePlayers().size());
+
             case "max_players":
                 return String.valueOf(plugin.getConfig().getInt("schematic-display.max-players", 100));
 
@@ -72,6 +93,28 @@ public class GotCraftHubPlaceholder extends PlaceholderExpansion {
 
             default:
                 return null;
+        }
+    }
+
+    /**
+     * Check if the parameter is a known placeholder (not a server name)
+     */
+    private boolean isKnownPlaceholder(String param) {
+        switch (param) {
+            case "is_hidden":
+            case "trail_enabled":
+            case "buildmode":
+            case "world":
+            case "players_visible":
+            case "in_hub":
+            case "online_players":
+            case "total_players":
+            case "bungee_total":
+            case "max_players":
+            case "display_enabled":
+                return true;
+            default:
+                return false;
         }
     }
 }
