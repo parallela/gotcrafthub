@@ -85,8 +85,13 @@ public class HubItemListener implements Listener {
             return;
         }
 
-        ItemStack item = event.getCurrentItem();
-        if (item != null && plugin.getHubItemManager().isHubItem(item)) {
+        // Check both the clicked item and the cursor item to prevent all interactions
+        ItemStack currentItem = event.getCurrentItem();
+        ItemStack cursorItem = event.getCursor();
+
+        // Cancel if either the clicked item or cursor item is a hub item
+        if ((currentItem != null && plugin.getHubItemManager().isHubItem(currentItem)) ||
+            (cursorItem != null && plugin.getHubItemManager().isHubItem(cursorItem))) {
             event.setCancelled(true);
         }
     }
