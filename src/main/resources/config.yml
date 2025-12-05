@@ -54,6 +54,12 @@ trails:
   amount: 2
   spawn-rate: 5  # ticks between spawns
 
+# Jump Minigame Settings
+jump:
+  enabled: true
+  block-type: "SLIME_BLOCK"  # The block type that spawns
+  max-players: 5  # Maximum players that can play at once
+
 # Messages (MiniMessage format with GOTCRAFT branding)
 messages:
   prefix: "<gradient:aqua:green>GOTCRAFT</gradient> <dark_gray>»</dark_gray> "
@@ -65,6 +71,21 @@ messages:
   reload: "<gradient:aqua:green>GOTCRAFT</gradient> <dark_gray>»</dark_gray> <green>Configuration reloaded!</green>"
   no-permission: "<gradient:aqua:green>GOTCRAFT</gradient> <dark_gray>»</dark_gray> <red>You don't have permission to do that!</red>"
   not-in-hub: "<gradient:aqua:green>GOTCRAFT</gradient> <dark_gray>»</dark_gray> <red>You can only use this in the hub world!</red>"
+  # Jump minigame messages
+  jump-pos1-set: "<gradient:aqua:green>GOTCRAFT</gradient> <dark_gray>»</dark_gray> <green>Jump area position 1 set to your current location!</green>"
+  jump-pos2-set: "<gradient:aqua:green>GOTCRAFT</gradient> <dark_gray>»</dark_gray> <green>Jump area position 2 set to your current location!</green>"
+  jump-respawn-set: "<gradient:aqua:green>GOTCRAFT</gradient> <dark_gray>»</dark_gray> <green>Jump respawn location set to your current position!</green>"
+  jump-not-setup: "<gradient:aqua:green>GOTCRAFT</gradient> <dark_gray>»</dark_gray> <red>Jump minigame is not fully configured! Use /ghub pos1, /ghub pos2, and /ghub setjumprespawn</red>"
+  jump-already-in-game: "<gradient:aqua:green>GOTCRAFT</gradient> <dark_gray>»</dark_gray> <red>You are already in the jump minigame!</red>"
+  jump-game-full: "<gradient:aqua:green>GOTCRAFT</gradient> <dark_gray>»</dark_gray> <red>The jump minigame is full! (Max 5 players)</red>"
+  jump-joined: "<gradient:aqua:green>GOTCRAFT</gradient> <dark_gray>»</dark_gray> <green>You joined the jump minigame! Jump on the blocks to score points!</green>"
+  jump-join-failed: "<gradient:aqua:green>GOTCRAFT</gradient> <dark_gray>»</dark_gray> <red>Failed to join the jump minigame. Please try again.</red>"
+  jump-not-in-game: "<gradient:aqua:green>GOTCRAFT</gradient> <dark_gray>»</dark_gray> <red>You are not in the jump minigame!</red>"
+  jump-left: "<gradient:aqua:green>GOTCRAFT</gradient> <dark_gray>»</dark_gray> <yellow>You left the jump minigame.</yellow>"
+  jump-score: "<gradient:aqua:green>GOTCRAFT</gradient> <dark_gray>»</dark_gray> <green>Score: <yellow>%score%</yellow></green>"
+  jump-new-record: "<gradient:aqua:green>GOTCRAFT</gradient> <dark_gray>»</dark_gray> <gold>NEW RECORD! Score: <yellow>%score%</yellow></gold>"
+  jump-final-score: "<gradient:aqua:green>GOTCRAFT</gradient> <dark_gray>»</dark_gray> <green>Final Score: <yellow>%score%</yellow></green>"
+  jump-fell: "<gradient:aqua:green>GOTCRAFT</gradient> <dark_gray>»</dark_gray> <red>You fell! Game over.</red>"
 
 # Join/Leave Messages (MiniMessage format with GOTCRAFT branding)
 join-leave-messages:

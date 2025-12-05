@@ -7,6 +7,7 @@ import me.lubomirstankov.gotCraftHub.listener.*;
 import me.lubomirstankov.gotCraftHub.manager.BungeeCordManager;
 import me.lubomirstankov.gotCraftHub.manager.ConfigManager;
 import me.lubomirstankov.gotCraftHub.manager.HubItemManager;
+import me.lubomirstankov.gotCraftHub.manager.JumpManager;
 import me.lubomirstankov.gotCraftHub.manager.PlayerDataManager;
 import me.lubomirstankov.gotCraftHub.manager.SchematicDisplayManager;
 import me.lubomirstankov.gotCraftHub.manager.SpawnManager;
@@ -24,6 +25,7 @@ public final class GotCraftHub extends JavaPlugin {
     private SpawnManager spawnManager;
     private SchematicDisplayManager schematicDisplayManager;
     private BungeeCordManager bungeeCordManager;
+    private JumpManager jumpManager;
 
     @Override
     public void onEnable() {
@@ -32,6 +34,7 @@ public final class GotCraftHub extends JavaPlugin {
         playerDataManager = new PlayerDataManager();
         spawnManager = new SpawnManager(this);
         hubItemManager = new HubItemManager(this);
+        jumpManager = new JumpManager(this);
 
         // Initialize schematic display manager (requires WorldEdit)
         if (Bukkit.getPluginManager().getPlugin("WorldEdit") != null) {
@@ -66,6 +69,11 @@ public final class GotCraftHub extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        // Cleanup jump manager
+        if (jumpManager != null) {
+            jumpManager.cleanup();
+        }
+
         // Cancel all tasks
         Bukkit.getScheduler().cancelTasks(this);
 
@@ -83,6 +91,7 @@ public final class GotCraftHub extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new HubItemListener(this), this);
         getServer().getPluginManager().registerEvents(new MovementListener(this), this);
         getServer().getPluginManager().registerEvents(new ChatListener(this), this);
+        getServer().getPluginManager().registerEvents(new JumpListener(this), this);
         // Spawn listener handles void damage teleport back to hub spawn
         getServer().getPluginManager().registerEvents(new me.lubomirstankov.gotCraftHub.listener.SpawnListener(this), this);
         // Nametag listener disabled - caused duplicate names
@@ -142,5 +151,9 @@ public final class GotCraftHub extends JavaPlugin {
 
     public BungeeCordManager getBungeeCordManager() {
         return bungeeCordManager;
+    }
+
+    public JumpManager getJumpManager() {
+        return jumpManager;
     }
 }

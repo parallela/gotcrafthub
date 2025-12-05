@@ -39,6 +39,24 @@ public class GotCraftHubPlaceholder extends PlaceholderExpansion {
             return "";
         }
 
+        // Handle jump leaderboard placeholders: %gotcraft_jump_1%, %gotcraft_jump_2%, etc.
+        if (params.toLowerCase().startsWith("jump_")) {
+            String[] parts = params.split("_");
+            if (parts.length == 2) {
+                try {
+                    int position = Integer.parseInt(parts[1]);
+                    var topPlayers = plugin.getJumpManager().getTopPlayers(position);
+                    if (position > 0 && position <= topPlayers.size()) {
+                        var entry = topPlayers.get(position - 1);
+                        return entry.getKey() + " - " + entry.getValue();
+                    }
+                    return "N/A";
+                } catch (NumberFormatException e) {
+                    return null;
+                }
+            }
+        }
+
         // Handle server-specific player counts: %gotcraft_servername%
         // This will match any server name directly as the parameter
         // Examples: %gotcraft_lobby%, %gotcraft_survival%, %gotcraft_creative%
@@ -91,6 +109,19 @@ public class GotCraftHubPlaceholder extends PlaceholderExpansion {
                         ? String.valueOf(plugin.getSchematicDisplayManager().isEnabled())
                         : "false";
 
+            case "jump_score":
+                return String.valueOf(plugin.getJumpManager().getPlayerScore(player.getUniqueId()));
+
+            case "jump_rank":
+                int rank = plugin.getJumpManager().getPlayerRank(player.getUniqueId());
+                return rank > 0 ? String.valueOf(rank) : "N/A";
+
+            case "jump_active_players":
+                return String.valueOf(plugin.getJumpManager().getActivePlayerCount());
+
+            case "jump_in_game":
+                return String.valueOf(plugin.getJumpManager().isPlayerInGame(player));
+
             default:
                 return null;
         }
@@ -100,6 +131,11 @@ public class GotCraftHubPlaceholder extends PlaceholderExpansion {
      * Check if the parameter is a known placeholder (not a server name)
      */
     private boolean isKnownPlaceholder(String param) {
+        // Check if it starts with jump_ (for jump leaderboard)
+        if (param.startsWith("jump_")) {
+            return true;
+        }
+
         switch (param) {
             case "is_hidden":
             case "trail_enabled":
@@ -112,6 +148,10 @@ public class GotCraftHubPlaceholder extends PlaceholderExpansion {
             case "bungee_total":
             case "max_players":
             case "display_enabled":
+            case "jump_score":
+            case "jump_rank":
+            case "jump_active_players":
+            case "jump_in_game":
                 return true;
             default:
                 return false;
