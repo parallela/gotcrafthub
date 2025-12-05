@@ -23,6 +23,9 @@ commands:
     description: Blocked command
     usage: /version
     aliases: [ver, about]
+  spawn:
+    description: Teleport to hub spawn
+    usage: /spawn
 
 permissions:
   ghub.admin:

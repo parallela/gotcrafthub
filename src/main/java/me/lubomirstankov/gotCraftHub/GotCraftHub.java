@@ -2,6 +2,7 @@ package me.lubomirstankov.gotCraftHub;
 
 import me.lubomirstankov.gotCraftHub.command.BlockedCommand;
 import me.lubomirstankov.gotCraftHub.command.GHubCommand;
+import me.lubomirstankov.gotCraftHub.command.SpawnCommand;
 import me.lubomirstankov.gotCraftHub.listener.*;
 import me.lubomirstankov.gotCraftHub.manager.BungeeCordManager;
 import me.lubomirstankov.gotCraftHub.manager.ConfigManager;
@@ -13,7 +14,6 @@ import me.lubomirstankov.gotCraftHub.placeholder.GotCraftHubPlaceholder;
 import me.lubomirstankov.gotCraftHub.task.DoubleJumpTask;
 import me.lubomirstankov.gotCraftHub.task.HealthHungerTask;
 import me.lubomirstankov.gotCraftHub.task.SchematicDisplayTask;
-import me.lubomirstankov.gotCraftHub.task.TrailTask;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -83,6 +83,8 @@ public final class GotCraftHub extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new HubItemListener(this), this);
         getServer().getPluginManager().registerEvents(new MovementListener(this), this);
         getServer().getPluginManager().registerEvents(new ChatListener(this), this);
+        // Spawn listener handles void damage teleport back to hub spawn
+        getServer().getPluginManager().registerEvents(new me.lubomirstankov.gotCraftHub.listener.SpawnListener(this), this);
         // Nametag listener disabled - caused duplicate names
         // getServer().getPluginManager().registerEvents(new NametagListener(this), this);
         getServer().getPluginManager().registerEvents(new CommandFilterListener(this), this);
@@ -98,13 +100,12 @@ public final class GotCraftHub extends JavaPlugin {
         getCommand("plugins").setExecutor(blockedCommand);
         getCommand("help").setExecutor(blockedCommand);
         getCommand("version").setExecutor(blockedCommand);
+
+        // /spawn command
+        getCommand("spawn").setExecutor(new SpawnCommand(this));
     }
 
     private void startTasks() {
-        // Trail task
-        int trailSpawnRate = configManager.getTrailSpawnRate();
-        new TrailTask(this).runTaskTimer(this, 0L, trailSpawnRate);
-
         // Health and hunger task
         new HealthHungerTask(this).runTaskTimer(this, 0L, 20L);
 

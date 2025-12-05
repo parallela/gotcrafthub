@@ -76,42 +76,6 @@ public class ChatListener implements Listener {
         event.quitMessage(parseMessage(leaveMessage));
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
-    public void onChat(AsyncChatEvent event) {
-        Player player = event.getPlayer();
-
-        // Only modify chat format if in hub world
-        if (!player.getWorld().getName().equalsIgnoreCase(plugin.getConfigManager().getHubWorld())) {
-            return;
-        }
-
-        if (!plugin.getConfigManager().getConfig().getBoolean("chat-format.enabled", true)) {
-            return;
-        }
-
-        event.setCancelled(true);
-
-        String format = plugin.getConfigManager().getConfig().getString("chat-format.format",
-                "<gray>%player_name%</gray> <dark_gray>»</dark_gray> <white>%message%</white>");
-
-        // Get the plain text message
-        String message = PlainTextComponentSerializer.plainText().serialize(event.message());
-
-        // Replace placeholders
-        format = format.replace("%player_name%", player.getName())
-                       .replace("%message%", message);
-
-        if (placeholderApiAvailable) {
-            format = PlaceholderAPI.setPlaceholders(player, format);
-        }
-
-        // Broadcast the formatted message
-        Component formattedMessage = parseMessage(format);
-        for (Player online : Bukkit.getOnlinePlayers()) {
-            online.sendMessage(formattedMessage);
-        }
-    }
-
     /**
      * Parse message with support for both MiniMessage and legacy color codes
      * Tries MiniMessage first, falls back to legacy & codes if that fails
